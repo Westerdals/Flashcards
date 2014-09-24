@@ -1,0 +1,6 @@
+name: flashcards
+version: 0.0.1
+description: A sample web application
+dependencies:
+  browser: any
+dev_dependencies:

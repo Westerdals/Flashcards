@@ -1,7 +1,7 @@
 # Created by https://www.gitignore.io
 
 ### Dart ###
-# Don’t commit the following directories created by pub.
+# Don't commit the following directories created by pub.
 build/
 packages/
 .buildlog

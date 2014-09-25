@@ -1,42 +1,28 @@
-body {
-  background-color: #F8F8F8;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 1.2em;
-  margin: 15px;
+.instructions {
+    min-height: 4em;
 }
 
-h1, p {
-  color: #333;
-}
-
-p {
-    margin-left: 3px;
-    margin-right: 3px;
-}
-
-#container {
-    width: 500px;
-    height: 400px;
-    margin: 0 auto;
-
-    text-align: center;
+.container {
+    max-width: 600px;
+    display: table;
 }
 
 .flashcard {
-    width: 500px;
-    height: 200px;
-
-    margin: 0 auto;
-
     display: table-cell;
-    text-align: center;
     vertical-align: middle;
+    height: 200px;
+    width: 100%;
+}
 
-    background-color: aquamarine;
+.front .back {
+    height: 200px;
+}
 
-    border-radius: 30px;
+.flashcard p {
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
+    height: 100%;
 }
 
 /* TODO: Animate. Look at http://davidwalsh.name/css-flip */

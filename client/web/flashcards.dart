@@ -16,16 +16,16 @@ class Main {
   final DivElement flashcardDiv = querySelector('.flashcard');
   final DivElement keywordDiv = querySelector('.front');
   final DivElement descriptionDiv = querySelector('.back');
-  final ParagraphElement keywordParagraph = querySelector('#keyword');
-  final ParagraphElement descriptionParagraph = querySelector('#description');
-  final ParagraphElement instructionsParagraph = querySelector('.instructions');
+  final ParagraphElement keywordParagraph = querySelector('.keyword');
+  final ParagraphElement descriptionParagraph = querySelector('.description');
+  final ParagraphElement instructionsParagraph = querySelector('.instructions p');
 
   // Will be incremented automatically.
   int _currentCardNumber = -1;
   bool _showingKeyword;
 
   Main() {
-    HttpRequest.getString("http://cadence.singles:28080/server-1.0-SNAPSHOT/cards").then(_decodeAndStart);
+    HttpRequest.getString('http://cadence.singles:28080/server-1.0-SNAPSHOT/cards').then(_decodeAndStart);
   }
 
   void _decodeAndStart(final String json) {

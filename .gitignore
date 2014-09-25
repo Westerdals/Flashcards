@@ -115,17 +115,21 @@ atlassian-ide-plugin.xml
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
 
-
-### Windows ###
-# Windows image file caches
+# Created by https://www.gitignore.io
+### Windows ### Maven #### Windows image file caches
+target/
 Thumbs.db
 ehthumbs.db
+pom.xml.tag
+pom.xml.releaseBackup
 
-# Folder config file
-Desktop.ini
+# Folder config file Desktop.ini 
+pom.xml.versionsBackup
+pom.xml.next
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
+release.properties
 
 # Windows Installer files
 *.cab

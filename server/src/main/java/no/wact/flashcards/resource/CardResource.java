@@ -15,7 +15,7 @@ public class CardResource
     private Repository repository;
 
     @GET
-    @Produces("application/json")
+    @Produces("application/json;charset=UTF-8")
     public Response getCards()
     {
         return Response.ok(repository.getAllCards()).build();

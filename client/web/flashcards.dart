@@ -1,5 +1,5 @@
-import 'dart:html' show querySelector, DivElement, ParagraphElement, HttpRequest, MouseEvent;
-import 'dart:convert' show JSON;
+import 'dart:html';
+import 'dart:convert';
 
 import 'card.dart';
 
@@ -14,15 +14,22 @@ class Main {
   static final String descriptionInstructions = "Tap again to go to the next card.";
 
   final DivElement flashcardDiv = querySelector('.flashcard');
-  final DivElement keywordDiv = querySelector('.front');
-  final DivElement descriptionDiv = querySelector('.back');
+  final ElementList frontDivs = querySelectorAll('.front');
+  final ElementList backDivs = querySelectorAll('.back');
   final ParagraphElement keywordParagraph = querySelector('.keyword');
   final ParagraphElement descriptionParagraph = querySelector('.description');
   final ParagraphElement instructionsParagraph = querySelector('.instructions p');
+  final ParagraphElement pointsParagraph = querySelector('.points');
+  final ParagraphElement cardNumberParagraph = querySelector('.cardNumber');
+  final ParagraphElement timeParagraph = querySelector('.time');
+  final ButtonElement noButton = querySelector('.no');
+  final ButtonElement yesButton = querySelector('.yes');
 
   // Will be incremented automatically.
   int _currentCardNumber = -1;
   bool _showingKeyword;
+
+  int points = 0;
 
   Main() {
     HttpRequest.getString('http://cadence.singles:28080/server-1.0-SNAPSHOT/cards').then(_decodeAndStart);
@@ -38,41 +45,57 @@ class Main {
   }
 
   void _start(final List<Card> cards) {
-    loadUI();
+    _loadUI();
   }
 
-  void loadUI() {
-    nextCard();
+  void _loadUI() {
+    _nextCard();
 
     flashcardDiv.onClick.listen(onFlashcardClicked);
+    noButton.onClick.listen((event) => _nextCard());
+    yesButton.onClick.listen((event) {
+      points++;
+      _nextCard();
+    });
   }
 
   void onFlashcardClicked(final MouseEvent event) {
-    if (keywordDiv.style.display == "none") {
-      nextCard();
-    } else {
-      showDescription();
+    // Only accept clicks when the card is showing the keyword.
+    if (backDivs.style.display == "none") {
+      _showDescription();
     }
   }
 
-  void nextCard() {
+  void _nextCard() {
+    renderPoints();
+
     _currentCardNumber++;
     _currentCardNumber %= _cards.length;
 
+    renderCardNumber();
+
     final Card card = _cards[_currentCardNumber];
 
-    keywordDiv.style.display = "inline";
-    descriptionDiv.style.display = "none";
+    frontDivs.style.display = "inline";
+    backDivs.style.display = "none";
 
     keywordParagraph.text = card.keyword;
     descriptionParagraph.text = card.description;
     instructionsParagraph.text = keywordInstructions;
   }
 
-  void showDescription() {
-    keywordDiv.style.display = "none";
-    descriptionDiv.style.display = "inline";
+  void _showDescription() {
+    frontDivs.style.display = "none";
+    backDivs.style.display = "inline";
 
     instructionsParagraph.text = descriptionInstructions;
+  }
+
+  void renderPoints() {
+    pointsParagraph.text = "$points / ${_cards.length} points";
+  }
+
+  void renderCardNumber() {
+    cardNumberParagraph.text = "Card $_currentCardNumber / ${_cards.length}";
   }
 }

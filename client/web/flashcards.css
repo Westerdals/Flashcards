@@ -1,3 +1,19 @@
+.centered {
+    text-align: center;
+}
+
+.left-aligned {
+    text-align: left;
+}
+
+.right-aligned {
+    text-align: right;
+}
+
+.inline-container * {
+    display: inline;
+}
+
 .instructions {
     min-height: 4em;
 }
@@ -7,11 +23,18 @@
     display: table;
 }
 
+.flashcard-container {
+    display: table;
+    width: 100%;
+}
+
 .flashcard {
     display: table-cell;
     vertical-align: middle;
     height: 200px;
     width: 100%;
+    background-color: #f8ecc2;
+    border-radius: 30px;
 }
 
 .front .back {

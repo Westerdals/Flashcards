@@ -14,12 +14,19 @@
     <h1>Flashcards</h1>
 
     <div class="instructions">
-        <p></p>
+        <div class="front inline-container">
+            <p></p>
+        </div>
+        <div class="back inline-container">
+            <button class="no col-xs-2">No</button>
+            <p class="centered col-xs-8">Did you get it right?</p>
+            <button class="yes col-xs-2">Yes</button>
+        </div>
     </div>
 
-    <div class="row center-block">
-        <div class="flashcard-container" style="display: table; width: 100%;">
-            <div class="flashcard" style="background-color: #f8ecc2; border-radius: 30px; display: table-cell; height: 200px;">
+    <div class="row">
+        <div class="flashcard-container">
+            <div class="flashcard" style="">
                 <div class="front">
                     <p class="keyword"></p>
                 </div>
@@ -27,6 +34,18 @@
                     <p class="description"></p>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="inline-container hud row">
+        <div class="centered col-xs-4">
+            <p class="points"></p>
+        </div>
+        <div class="centered col-xs-4">
+            <p class="cardNumber">Question 4 / 12</p>
+        </div>
+        <div class="centered col-xs-4">
+            <p class="time">Time: 00:30</p>
         </div>
     </div>
 </div>

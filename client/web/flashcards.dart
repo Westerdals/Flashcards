@@ -25,13 +25,11 @@ class Main {
   bool _showingKeyword;
 
   Main() {
-    HttpRequest.getString("http://localhost:8080/server-1.0-SNAPSHOT/cards").then(_decodeAndStart);
+    HttpRequest.getString("http://cadence.singles:28080/server-1.0-SNAPSHOT/cards").then(_decodeAndStart);
   }
 
   void _decodeAndStart(final String json) {
-    final Map<Map> cardMap = JSON.decode(json);
-    cardMap.forEach((cardAsMap) => _cards.add(new Card(cardAsMap['keyword'], cardAsMap['description'])));
-
+    JSON.decode(json).forEach((c) => _cards.add(new Card(c['keyword'], c['description'])));
     showMainMenu();
   }
 

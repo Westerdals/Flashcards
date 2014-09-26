@@ -108,7 +108,7 @@ class Main {
   }
 
   void _renderCardNumber() {
-    cardNumberParagraph.text = "Card $_currentCardNumber / ${_cards.length}";
+    cardNumberParagraph.text = "Card ${_currentCardNumber + 1} / ${_cards.length}";
   }
 
   void _renderTime() {

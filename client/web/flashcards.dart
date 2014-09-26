@@ -1,5 +1,6 @@
 import 'dart:html';
 import 'dart:convert';
+import 'dart:async';
 
 import 'card.dart';
 
@@ -30,13 +31,18 @@ class Main {
   bool _showingKeyword;
 
   int points = 0;
+  int secondsPassed = 0;
 
   Main() {
     HttpRequest.getString('http://cadence.singles:28080/server-1.0-SNAPSHOT/cards').then(_decodeAndStart);
   }
 
   void _decodeAndStart(final String json) {
-    JSON.decode(json).forEach((c) => _cards.add(new Card(c['keyword'], c['description'])));
+    JSON.decode(json).forEach((c) {
+      final Card card = new Card(c['keyword'], c['description']);
+      _cards.add(card);
+    });
+
     showMainMenu();
   }
 
@@ -45,13 +51,19 @@ class Main {
   }
 
   void _start(final List<Card> cards) {
+    new Timer.periodic(const Duration(seconds: 1), (timer) {
+      secondsPassed++;
+      _renderTime();
+    });
+
     _loadUI();
   }
 
   void _loadUI() {
     _nextCard();
+    _renderTime();
 
-    flashcardDiv.onClick.listen(onFlashcardClicked);
+    flashcardDiv.onClick.listen(_onFlashcardClicked);
     noButton.onClick.listen((event) => _nextCard());
     yesButton.onClick.listen((event) {
       points++;
@@ -59,7 +71,7 @@ class Main {
     });
   }
 
-  void onFlashcardClicked(final MouseEvent event) {
+  void _onFlashcardClicked(final MouseEvent event) {
     // Only accept clicks when the card is showing the keyword.
     if (backDivs.style.display == "none") {
       _showDescription();
@@ -67,12 +79,12 @@ class Main {
   }
 
   void _nextCard() {
-    renderPoints();
+    _renderPoints();
 
     _currentCardNumber++;
     _currentCardNumber %= _cards.length;
 
-    renderCardNumber();
+    _renderCardNumber();
 
     final Card card = _cards[_currentCardNumber];
 
@@ -91,11 +103,22 @@ class Main {
     instructionsParagraph.text = descriptionInstructions;
   }
 
-  void renderPoints() {
+  void _renderPoints() {
     pointsParagraph.text = "$points / ${_cards.length} points";
   }
 
-  void renderCardNumber() {
+  void _renderCardNumber() {
     cardNumberParagraph.text = "Card $_currentCardNumber / ${_cards.length}";
+  }
+
+  void _renderTime() {
+    final int secondsInMinute = 60;
+    final int currentMinutes = secondsPassed ~/ Duration.SECONDS_PER_MINUTE;
+    final int currentSeconds = secondsPassed % Duration.SECONDS_PER_MINUTE;
+
+    final String minutesText = "${(currentMinutes < 10) ? "0" : ""}$currentMinutes";
+    final String secondsText = "${(currentSeconds < 10) ? "0" : ""}$currentSeconds";
+
+    timeParagraph.text = "Time: $minutesText:$secondsText";
   }
 }

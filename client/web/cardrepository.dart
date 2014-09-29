@@ -7,9 +7,7 @@ import 'card.dart';
 class CardRepository {
   static final CardRepository _instance = new CardRepository._internal();
 
-  List<Card> _cards = [];
-
-  bool loaded = false;
+  final List<Card> _cards = [];
 
   factory CardRepository() {
     return _instance;
@@ -27,8 +25,6 @@ class CardRepository {
       final Card card = new Card(c['keyword'], c['description']);
       _cards.add(card);
     });
-
-    loaded = true;
   }
 
   List<Card> get cards => _cards;

@@ -1,7 +1,7 @@
 import 'dart:html';
-import 'dart:convert';
 import 'dart:async';
 
+import 'cardrepository.dart';
 import 'card.dart';
 
 void main() {
@@ -9,8 +9,6 @@ void main() {
 }
 
 class Main {
-  static final List<Card> _cards = [];
-
   static final String keywordInstructions = "Try to remember what the keyword means. Turn it around by tapping it.";
   static final String descriptionInstructions = "Tap again to go to the next card.";
 
@@ -26,6 +24,8 @@ class Main {
   final ButtonElement noButton = querySelector('.no');
   final ButtonElement yesButton = querySelector('.yes');
 
+  final CardRepository _cardRepository = new CardRepository();
+
   // Will be incremented automatically.
   int _currentCardNumber = -1;
   bool _showingKeyword;
@@ -34,24 +34,17 @@ class Main {
   int secondsPassed = 0;
 
   Main() {
-    HttpRequest.getString('http://cadence.singles:28080/server-1.0-SNAPSHOT/cards').then(_decodeAndStart);
+    _cardRepository.loadCards().then((nothing) => _showMainMenu);
   }
 
-  void _decodeAndStart(final String json) {
-    JSON.decode(json).forEach((c) {
-      final Card card = new Card(c['keyword'], c['description']);
-      _cards.add(card);
-    });
+  void _showMainMenu(final String data) {
+    // TODO: display "loading cards..." or something and block starting the game until it's done.
 
-    showMainMenu();
+    _start();
   }
 
-  void showMainMenu() {
-    _start(_cards);
-  }
-
-  void _start(final List<Card> cards) {
-    new Timer.periodic(const Duration(seconds: 1), (timer) {
+  void _start() {
+    new Timer.periodic(new Duration(seconds: 1), (timer) {
       secondsPassed++;
       _renderTime();
     });
@@ -82,11 +75,11 @@ class Main {
     _renderPoints();
 
     _currentCardNumber++;
-    _currentCardNumber %= _cards.length;
+    _currentCardNumber %= _cardRepository.cards.length;
 
     _renderCardNumber();
 
-    final Card card = _cards[_currentCardNumber];
+    final Card card = _cardRepository.cards[_currentCardNumber];
 
     frontDivs.style.display = "inline";
     backDivs.style.display = "none";
@@ -104,11 +97,11 @@ class Main {
   }
 
   void _renderPoints() {
-    pointsParagraph.text = "$points / ${_cards.length} points";
+    pointsParagraph.text = "$points / ${_cardRepository.cards.length} points";
   }
 
   void _renderCardNumber() {
-    cardNumberParagraph.text = "Card ${_currentCardNumber + 1} / ${_cards.length}";
+    cardNumberParagraph.text = "Card ${_currentCardNumber + 1} / ${_cardRepository.cards.length}";
   }
 
   void _renderTime() {

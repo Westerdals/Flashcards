@@ -34,10 +34,10 @@ class Main {
   int secondsPassed = 0;
 
   Main() {
-    _cardRepository.loadCards().then((nothing) => _showMainMenu);
+    _cardRepository.loadCards().then((requiredString) => _showMainMenu());
   }
 
-  void _showMainMenu(final String data) {
+  void _showMainMenu() {
     // TODO: display "loading cards..." or something and block starting the game until it's done.
 
     _start();

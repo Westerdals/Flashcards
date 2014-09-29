@@ -39,7 +39,6 @@ class Main {
 
   void _showMainMenu() {
     // TODO: display "loading cards..." or something and block starting the game until it's done.
-
     _start();
   }
 

@@ -13,39 +13,52 @@
 <div class="container">
     <h1>Flashcards</h1>
 
-    <div class="instructions">
-        <div class="front inline-container">
-            <p></p>
-        </div>
-        <div class="back inline-container">
-            <button class="no col-xs-2">No</button>
-            <p class="centered col-xs-8">Did you get it right?</p>
-            <button class="yes col-xs-2">Yes</button>
-        </div>
+    <div class="main-menu-container">
+        <h3>Main menu</h3>
+        <button class="start-game">Start game</button>
     </div>
 
-    <div class="row">
-        <div class="flashcard-container">
-            <div class="flashcard">
-                <div class="front">
-                    <p class="keyword"></p>
-                </div>
-                <div class="back">
-                    <p class="description"></p>
+    <div class="game-container">
+        <div class="instructions">
+            <div class="front inline-container">
+                <p></p>
+            </div>
+            <div class="back inline-container">
+                <button class="no col-xs-2">No</button>
+                <p class="centered col-xs-8">Did you get it right?</p>
+                <button class="yes col-xs-2">Yes</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="flashcard-container">
+                <div class="flashcard">
+                    <div class="front">
+                        <p class="keyword"></p>
+                    </div>
+                    <div class="back">
+                        <p class="description"></p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="inline-container hud row">
-        <div class="centered col-xs-4">
-            <p class="points"></p>
+        <div class="inline-container hud row">
+            <div class="centered col-xs-4">
+                <p class="points"></p>
+            </div>
+            <div class="centered col-xs-4">
+                <p class="cardNumber"></p>
+            </div>
+            <div class="centered col-xs-4">
+                <p class="time"></p>
+            </div>
         </div>
-        <div class="centered col-xs-4">
-            <p class="cardNumber"></p>
-        </div>
-        <div class="centered col-xs-4">
-            <p class="time"></p>
+
+        <div class="button-container row">
+            <span class="col-xs-4"></span>
+            <button class="back-to-main-menu centered col-xs-4">Quit</button>
+            <span class="col-xs-4"></span>
         </div>
     </div>
 </div>

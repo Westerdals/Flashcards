@@ -12,6 +12,12 @@ class Main {
   static final String keywordInstructions = "Try to remember what the keyword means. Turn it around by tapping it.";
   static final String descriptionInstructions = "Tap again to go to the next card.";
 
+  final DivElement mainMenuDiv = querySelector('.main-menu-container');
+  final ButtonElement startGameButton = querySelector('.start-game');
+
+  final DivElement gameDiv = querySelector('.game-container');
+  final ButtonElement backToMainMenuButton = querySelector('.back-to-main-menu');
+
   final DivElement flashcardDiv = querySelector('.flashcard');
   final ElementList frontDivs = querySelectorAll('.front');
   final ElementList backDivs = querySelectorAll('.back');
@@ -26,29 +32,41 @@ class Main {
 
   final CardRepository _cardRepository = new CardRepository();
 
-  // Will be incremented automatically.
-  int _currentCardNumber = -1;
+  int _currentCardNumber;
   bool _showingKeyword;
 
-  int points = 0;
-  int secondsPassed = 0;
+  int points;
+  int secondsPassed;
 
   Main() {
-    _cardRepository.loadCards().then((requiredString) => _showMainMenu());
+    _showMainMenu();
+
+    // TODO: display "loading cards..." or something and block starting the game until it's done.
+    _cardRepository.loadCards().then((ignored) => _showMainMenu());
   }
 
   void _showMainMenu() {
-    // TODO: display "loading cards..." or something and block starting the game until it's done.
-    _start();
+    gameDiv.style.display = 'none';
+    mainMenuDiv.style.display = 'inline';
+
+    startGameButton.onClick.listen((event) => _start());
   }
 
   void _start() {
+    mainMenuDiv.style.display = 'none';
+    gameDiv.style.display = 'inline';
+
+    // Gets incremented when _loadUI() calls _nextCard().
+    _currentCardNumber = -1;
+    points = 0;
+    secondsPassed = 0;
+
+    _loadUI();
+
     new Timer.periodic(new Duration(seconds: 1), (timer) {
       secondsPassed++;
       _renderTime();
     });
-
-    _loadUI();
   }
 
   void _loadUI() {
@@ -61,6 +79,7 @@ class Main {
       points++;
       _nextCard();
     });
+    backToMainMenuButton.onClick.listen((event) => _showMainMenu());
   }
 
   void _onFlashcardClicked(final MouseEvent event) {
@@ -74,7 +93,9 @@ class Main {
     _renderPoints();
 
     _currentCardNumber++;
-    _currentCardNumber %= _cardRepository.cards.length;
+    if (_currentCardNumber >= _cardRepository.cards.length) {
+      _showGameOverScreen();
+    }
 
     _renderCardNumber();
 
@@ -112,5 +133,9 @@ class Main {
     final String secondsText = "${(currentSeconds < 10) ? "0" : ""}$currentSeconds";
 
     timeParagraph.text = "Time: $minutesText:$secondsText";
+  }
+
+  void _showGameOverScreen() {
+    _showMainMenu();
   }
 }

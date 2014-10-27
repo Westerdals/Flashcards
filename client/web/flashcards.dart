@@ -16,6 +16,7 @@ class Main {
   final ButtonElement startGameButton = querySelector('.start-game');
 
   final DivElement gameDiv = querySelector('.game-container');
+  final ButtonElement backToMainMenuButton = querySelector('.back-to-main-menu');
 
   final DivElement flashcardDiv = querySelector('.flashcard');
   final ElementList frontDivs = querySelectorAll('.front');
@@ -78,6 +79,7 @@ class Main {
       points++;
       _nextCard();
     });
+    backToMainMenuButton.onClick.listen((event) => _showMainMenu());
   }
 
   void _onFlashcardClicked(final MouseEvent event) {

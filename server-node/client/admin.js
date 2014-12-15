@@ -31,8 +31,6 @@ admin.controller('CardsAdminController', function ($scope, $http) {
             .success(function (card) {
                 $scope.cards.push(card);
                 $scope.key = $scope.value = '';
-            })
-            .error(function (data, status, headers, config) {
             });
     }
 });

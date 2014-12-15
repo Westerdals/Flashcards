@@ -5,6 +5,8 @@ var Card = require('./card.js');
 
 var app = express();
 
+var port = 5678;
+
 app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/../client'));
@@ -40,8 +42,8 @@ app.delete('/cards/:id', function(req, res, next) {
     });
 });
 
-app.listen(4321);
-console.log('App listening on port 4321');
+app.listen(port);
+console.log('App listening on port ' + port);
 
 // clear cards
 Card.remove({}, function(err) {

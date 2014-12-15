@@ -1,10 +1,15 @@
 import 'dart:html';
 import 'dart:async';
 
+import 'package:angular/angular.dart';
+import 'package:angular/application_factory.dart';
+
 import 'cardrepository.dart';
 import 'card.dart';
 
 void main() {
+  applicationFactory.run();
+
   new Main();
 }
 

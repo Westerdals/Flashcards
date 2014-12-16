@@ -1,6 +1,6 @@
-var admin = angular.module('admin', []);
+var flashcardsControllers = angular.module('flashcardsControllers', []);
 
-admin.controller('CardsAdminController', function ($scope, $http) {
+flashcardsControllers.controller('CardsAdminController', function ($scope, $http) {
     $http.get('/cards')
         .success(function (cards) {
             $scope.cards = cards;

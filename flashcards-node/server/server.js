@@ -11,14 +11,14 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/../client'));
 
-app.get('/cards', function (req, res, next) {
+app.get('/api/flashcards', function (req, res, next) {
     Card.find(function (err, cards) {
         if (err) return next(err);
         return res.json(cards);
     });
 });
 
-app.post('/cards', function (req, res, next) {
+app.post('/api/flashcards', function (req, res, next) {
     var card = req.body;
 
     console.log(card);
@@ -29,7 +29,7 @@ app.post('/cards', function (req, res, next) {
     });
 });
 
-app.delete('/cards/:id', function(req, res, next) {
+app.delete('/api/flashcards/:id', function(req, res, next) {
     var id = req.params.id;
 
     console.log('trying to delete :' + id);

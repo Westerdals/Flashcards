@@ -1,0 +1,38 @@
+<h1>Manage flashcards</h1>
+
+<form>
+    <div class="form-group">
+        <div class="input-group">
+
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                    <th></th>
+                </tr>
+                <tr class="row-create">
+                    <td>
+                        <input type="text" class="form-control" ng-model="key"/>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" ng-model="value"/>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-success"
+                                ng-click="createFlashcard(key, value)">Create
+                        </button>
+                    </td>
+                </tr>
+                <tr ng-repeat="card in cards">
+                    <td>{{card.key}}</td>
+                    <td>{{card.value}}</td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="deleteCard(card)">Delete</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
